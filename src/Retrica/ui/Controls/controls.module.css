@@ -1,0 +1,111 @@
+.controls,
+.settings {
+  list-style: none;
+  padding: 0.7em;
+
+  position: absolute;
+
+  display: flex;
+
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 20px;
+  background-color: rgba(46, 46, 46, 0.773);
+  z-index: 200;
+}
+
+.settings {
+  flex-direction: column;
+  left: 0;
+  bottom: 20%;
+  width: fit-content;
+  height: 30%;
+  justify-content: space-between;
+}
+
+.controls {
+  left: 0;
+  bottom: 0.3em;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.controls button,
+.settings button {
+  background-color: white;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+}
+
+.settings button:disabled {
+  background-color: rgba(255, 255, 255, 0.507);
+  cursor: auto;
+}
+
+.controls li:not(:first-of-type) button:hover,
+.settings button:hover {
+  background-color: rgba(255, 255, 255, 0.507);
+}
+
+.controls li:first-of-type button:hover {
+  outline: 2px solid rgb(17, 96, 255);
+}
+
+.controls img,
+.settings img {
+  width: 25px;
+  height: 25px;
+}
+
+.settings li {
+  position: relative;
+}
+
+@media screen and (max-width: 720px) {
+  .settings {
+    height: 50%;
+  }
+  .controls button,
+  .settings button {
+    width: 23px;
+    height: 23px;
+  }
+
+  .controls img,
+  .settings img {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .controls,
+  .settings {
+    padding: 0.4em;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .controls button,
+  .settings button {
+    width: 18px;
+    height: 18px;
+  }
+  .controls img,
+  .settings img {
+    width: 13px;
+    height: 13px;
+  }
+
+  .settings {
+    bottom: 25%;
+  }
+}

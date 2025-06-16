@@ -1,0 +1,20 @@
+.parameters {
+  padding-block: 5px;
+  list-style: none;
+  position: absolute;
+  border-radius: 20px;
+  background-color: rgba(46, 46, 46, 0.773);
+  z-index: 200;
+  top: -25%;
+  left: 120%;
+  text-align: center;
+}
+
+.parameters li {
+  padding: 5px 10px;
+  color: white;
+}
+
+.parameters li:not(:first-of-type) {
+  cursor: pointer;
+}
