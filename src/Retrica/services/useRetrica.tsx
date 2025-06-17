@@ -1,4 +1,4 @@
-import { useState, type RefObject, useMemo, useRef, useCallback } from "react";
+import { useState, type RefObject, useRef, useEffect } from "react";
 import { type CameraOptions, type MediaElement } from "../types/retrica";
 
 export const useRetrica = ({
@@ -17,14 +17,13 @@ export const useRetrica = ({
     filter: "",
     parameters: "",
     client: "",
-    devices: [],
   });
   const [gallery, setGallery] = useState<MediaElement[]>([]);
   const [error, setError] = useState("");
   const recorder = useRef<MediaRecorder>(null);
   const intervalId = useRef<number>(undefined);
 
-  useMemo(() => {
+  useEffect(() => {
     navigator.mediaDevices
       .getUserMedia({
         video: { facingMode: { exact: cameraOptions.facingMode } },
@@ -60,6 +59,17 @@ export const useRetrica = ({
             data = [];
           };
         }
+      })
+      .then(() => {
+        navigator.mediaDevices.enumerateDevices().then((devices) => {
+          const cameras = devices.filter((d) => d.kind === "videoinput");
+
+          if (cameras.length > 1) {
+            setCameraOptions((prev) => ({ ...prev, client: "mobile" }));
+          } else {
+            setCameraOptions((prev) => ({ ...prev, client: "desktop" }));
+          }
+        });
       })
       .catch((err) => {
         setError("" + err);
@@ -172,7 +182,7 @@ export const useRetrica = ({
     setCameraOptions((prev) => ({ ...prev, parameters }));
   };
 
-  const toggleFacingMode = useCallback(() => {
+  const toggleFacingMode = () => {
     if (videoRef.current) {
       videoRef.current.autoplay = false;
     }
@@ -181,7 +191,7 @@ export const useRetrica = ({
         ? { ...prev, facingMode: "environment" }
         : { ...prev, facingMode: "user" }
     );
-  }, []);
+  };
 
   return {
     cameraOptions,
