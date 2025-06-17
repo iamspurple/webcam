@@ -18,4 +18,5 @@ export type CameraOptions = {
   filter: string;
   parameters: string;
   client: string;
+  devices: string[];
 };

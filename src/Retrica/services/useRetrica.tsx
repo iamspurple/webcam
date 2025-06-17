@@ -17,6 +17,7 @@ export const useRetrica = ({
     filter: "",
     parameters: "",
     client: "",
+    devices: [],
   });
   const [gallery, setGallery] = useState<MediaElement[]>([]);
   const [error, setError] = useState("");
@@ -26,6 +27,11 @@ export const useRetrica = ({
   useMemo(() => {
     navigator.mediaDevices.enumerateDevices().then((devices) => {
       const cameras = devices.filter((device) => device.kind === "videoinput");
+      const d = cameras.map((cam) => JSON.stringify(cam));
+      setCameraOptions((prev) => ({
+        ...prev,
+        devices: d,
+      }));
       if (cameras.length > 1) {
         setCameraOptions((prev) => ({ ...prev, client: "mobile" }));
       }
