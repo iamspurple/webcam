@@ -61,24 +61,27 @@ export const useRetrica = ({
           };
         }
       })
+      .then(() => {
+        navigator.mediaDevices.enumerateDevices().then((devices) => {
+          const cameras = devices.filter(
+            (device) => device.kind === "videoinput"
+          );
+          const d = cameras.map((cam) => JSON.stringify(cam));
+          setCameraOptions((prev) => ({
+            ...prev,
+            devices: d,
+          }));
+          if (cameras.length > 1) {
+            setCameraOptions((prev) => ({ ...prev, client: "mobile" }));
+          }
+          if (cameras.length === 1) {
+            setCameraOptions((prev) => ({ ...prev, client: "desktop" }));
+          }
+        });
+      })
       .catch((err) => {
         setError("" + err);
       });
-
-    navigator.mediaDevices.enumerateDevices().then((devices) => {
-      const cameras = devices.filter((device) => device.kind === "videoinput");
-      const d = cameras.map((cam) => JSON.stringify(cam));
-      setCameraOptions((prev) => ({
-        ...prev,
-        devices: d,
-      }));
-      if (cameras.length > 1) {
-        setCameraOptions((prev) => ({ ...prev, client: "mobile" }));
-      }
-      if (cameras.length === 1) {
-        setCameraOptions((prev) => ({ ...prev, client: "desktop" }));
-      }
-    });
   }, [cameraOptions.facingMode]);
 
   const takePhoto = () => {
