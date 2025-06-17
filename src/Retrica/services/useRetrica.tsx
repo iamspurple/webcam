@@ -1,4 +1,4 @@
-import { useState, type RefObject, useMemo, useRef } from "react";
+import { useState, type RefObject, useMemo, useRef, useCallback } from "react";
 import { type CameraOptions, type MediaElement } from "../types/retrica";
 
 export const useRetrica = ({
@@ -190,13 +190,13 @@ export const useRetrica = ({
     setCameraOptions((prev) => ({ ...prev, parameters }));
   };
 
-  const toggleFacingMode = () => {
-    if (cameraOptions.facingMode === "user") {
-      setCameraOptions((prev) => ({ ...prev, facingMode: "environment" }));
-    } else {
-      setCameraOptions((prev) => ({ ...prev, facingMode: "user" }));
-    }
-  };
+  const toggleFacingMode = useCallback(() => {
+    setCameraOptions((prevState) =>
+      prevState.facingMode === "user"
+        ? { ...prevState, facingMode: "environment" }
+        : { ...prevState, facingMode: "user" }
+    );
+  }, []);
 
   return {
     cameraOptions,
