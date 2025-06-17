@@ -61,24 +61,6 @@ export const useRetrica = ({
           };
         }
       })
-      .then(() => {
-        navigator.mediaDevices.enumerateDevices().then((devices) => {
-          const cameras = devices.filter(
-            (device) => device.kind === "videoinput"
-          );
-          const d = cameras.map((cam) => JSON.stringify(cam));
-          setCameraOptions((prev) => ({
-            ...prev,
-            devices: d,
-          }));
-          if (cameras.length > 1) {
-            setCameraOptions((prev) => ({ ...prev, client: "mobile" }));
-          }
-          if (cameras.length === 1) {
-            setCameraOptions((prev) => ({ ...prev, client: "desktop" }));
-          }
-        });
-      })
       .catch((err) => {
         setError("" + err);
       });
@@ -191,10 +173,13 @@ export const useRetrica = ({
   };
 
   const toggleFacingMode = useCallback(() => {
-    setCameraOptions((prevState) =>
-      prevState.facingMode === "user"
-        ? { ...prevState, facingMode: "environment" }
-        : { ...prevState, facingMode: "user" }
+    if (videoRef.current) {
+      videoRef.current.autoplay = false;
+    }
+    setCameraOptions((prev) =>
+      prev.facingMode === "user"
+        ? { ...prev, facingMode: "environment" }
+        : { ...prev, facingMode: "user" }
     );
   }, []);
 

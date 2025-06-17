@@ -81,10 +81,6 @@ export const Camera = () => {
           closeGallery={() => setIsGalleryOpen(false)}
         />
       )}
-
-      {cameraOptions.devices.map((d) => (
-        <div>{d}</div>
-      ))}
     </div>
   );
 };
