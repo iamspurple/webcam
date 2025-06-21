@@ -36,7 +36,7 @@ export const Camera = () => {
         )}
         <video
           muted={true}
-          playsinline={true}
+          playsInline={true}
           className={
             cameraOptions.facingMode === "user"
               ? `${styles.video} ${styles.selfie}`
