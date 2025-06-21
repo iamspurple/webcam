@@ -35,7 +35,7 @@ export const Camera = () => {
           </div>
         )}
         <video
-          muted
+           muted
           playsinline
           className={
             cameraOptions.facingMode === "user"
